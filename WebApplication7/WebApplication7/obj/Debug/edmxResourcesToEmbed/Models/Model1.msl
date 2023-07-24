@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="supercarModelStoreContainer" CdmEntityContainer="supercarEntities">
+    <EntitySetMapping Name="carregs">
+      <EntityTypeMapping TypeName="supercarModel.carreg">
+        <MappingFragment StoreEntitySet="carreg">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="carno" ColumnName="carno" />
+          <ScalarProperty Name="make" ColumnName="make" />
+          <ScalarProperty Name="model" ColumnName="model" />
+          <ScalarProperty Name="available" ColumnName="available" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customers">
+      <EntityTypeMapping TypeName="supercarModel.customer">
+        <MappingFragment StoreEntitySet="customer">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="custname" ColumnName="custname" />
+          <ScalarProperty Name="addres" ColumnName="addres" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rentails">
+      <EntityTypeMapping TypeName="supercarModel.rentail">
+        <MappingFragment StoreEntitySet="rentail">
+          <ScalarProperty Name="edate" ColumnName="edate" />
+          <ScalarProperty Name="sdate" ColumnName="sdate" />
+          <ScalarProperty Name="fee" ColumnName="fee" />
+          <ScalarProperty Name="custid" ColumnName="custid" />
+          <ScalarProperty Name="carid" ColumnName="carid" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-4">
+
+        @using (Html.BeginForm("Save", "rent", FormMethod.Post, new { id = "popupForm" }))
+        {
+            <div>
+                <h1>Car Rental</h1>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Car id</label>
+                <select class="form-control" id="carid" name="carid" placeholder="Carid" required>
+                    <option>Please Select</option>
+                </select>
+            </div>
+
+            //BU KISIM HATALI VERİLERİ ÇEKMİYOR BURDA HATA YOK AMA BURDAKİ ID VEYA NAME AŞAĞIDA ÇAĞIRAMIYOR ORDA UFAK BİR HATA
+
+            <div class="form-group">
+                <label class="control-label">Customer ID</label>
+                <input type="text" id="custid" name="custid" class="form-control" placeholder="CustID" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Customer Name</label>
+                <input type="text" id="custname" name="custname" class="form-control" placeholder="CustName" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Rental fee</label>
+                <input type="text" id="rentalfee" name="rentalfee" class="form-control" placeholder="Rental fee" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Start Date</label>
+                <input type="date" id="sdate" name="sdate" class="form-control" placeholder="Start Date" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">End Date</label>
+                <input type="date" id="edate" name="edate" class="form-control" placeholder="End Date" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="save" class="btn btn-success" />
+            </div>
+        }
+         
+    </div>
+
+    <div class="col-sm-8">
+
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th>CarNo</th>
+                <th>CustomerID</th>
+                <th>Fee</th>
+                <th>Start Date</th>
+                <th>End Date </th>
+                @*<th>Avaliable</th>*@
+            </tr>
+            </thead>
+
+            <tbody style="color: black;">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.carno</td>
+                        <td>@item.custid</td>
+                        <td>@item.rentalfee</td> 
+                        <td>@item.sdate</td>
+                        <td>@item.edate</td>
+                        @*<td>@item.durum</td>*@ 
+                    </tr>
+                }
+
+            </tbody>
+
+
+
+        </table>
+
+    </div>
+
+
+
+</div>
+
+
+
+@section scripts {
+    <script src="/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            getCar();
+            load();
+
+        });
+        //SAYFA YÜKLENDİĞİNDE İLK BURA ÇÜNKÜ TEXTBOXLAR DISABLED OKEY
+        function load() {
+            $("#custid").attr("disabled", "disabled");
+            $("#custname").attr("disabled", "disabled");
+            $("#rentalfee").attr("disabled", "disabled");
+            $("#sdate").attr("disabled", "disabled");
+            $("#edate").attr("disabled", "disabled");
+        }
+
+        function getCar() {
+            //BURASI DROPDOWNLIST'E ARABALARI SIRALIYOR YANİ BU DEMEK OLUYOR Kİ ÇALIŞIYOR BURASI
+            $.ajax({
+                type: 'GET',
+                url: '/rent/Getcar',
+                dataType: 'JSON',
+                success: function (data) {
+
+                    console.log(data);
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#carid").append($("<option/>", {
+                            text: data[i].carno
+                        }));
+
+                    }
+
+                }
+            });
+        }
+
+        $("#carid").change(function () {
+            available();
+        });
+
+        function available() {
+            /* var carid = $("#carid").val(); KAFAYI YİCEM ŞİMDİ */ 
+
+            $.ajax({
+                type: 'POST',
+                url: '/rent/Getavil?carno=' + $("#carid").val(),
+                dataType: 'JSON',
+                success: function(data) {
+                    console.log(data)
+
+                    var aval = data;
+
+                    if (aval == "yes") {
+                        $("#custid").removeAttr('disabled');
+                        $("#custname").removeAttr('disabled');
+                        $("#rentalfee").removeAttr('disabled');
+                        $("#sdate").removeAttr('disabled');
+                        $("#edate").removeAttr('disabled');
+                    }
+                    else {
+                        $("#custid").attr("disabled", "disabled");
+                        $("#custname").attr("disabled", "disabled");
+                        $("#rentalfee").attr("disabled", "disabled");
+                        $("#sdate").attr("disabled", "disabled");
+                        $("#edate").attr("disabled", "disabled");
+                    }
+                }
+            });
+        }
+
+        getCustomer();
+
+        function getCustomer() {
+            $("#custid").keyup(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/rent/Getid',
+                    data: { id: $("#custid").val() },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $("#custname").val(data);
+                    }
+                });
+            });
+        }
+    </script>
+}
