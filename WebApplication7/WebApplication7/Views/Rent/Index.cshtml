@@ -1,14 +1,12 @@
-﻿@{
-    ViewBag.Title = "Index";
-}
-
+﻿
 <div class="row">
     <div class="col-sm-4">
 
         @using (Html.BeginForm("Save", "rent", FormMethod.Post, new { id = "popupForm" }))
         {
-            <div>
-                <h1>Car Rental</h1>
+            <div>@model IEnumerable<WebApplication7.Models.RentailViewModel>
+
+               <h1>Car Rentail</h1>
             </div>
 
             <div class="form-group">
@@ -18,7 +16,7 @@
                 </select>
             </div>
 
-            //BU KISIM HATALI VERİLERİ ÇEKMİYOR BURDA HATA YOK AMA BURDAKİ ID VEYA NAME AŞAĞIDA ÇAĞIRAMIYOR ORDA UFAK BİR HATA
+            
 
             <div class="form-group">
                 <label class="control-label">Customer ID</label>
@@ -51,31 +49,28 @@
 
         <table class="table">
             <thead>
-            <tr>
+                <tr>
 
-                <th>CarNo</th>
-                <th>CustomerID</th>
-                <th>Fee</th>
-                <th>Start Date</th>
-                <th>End Date </th>
-                @*<th>Avaliable</th>*@
-            </tr>
+                    <th>CarNo</th>
+                    <th>CustomerID</th>
+                    <th>Fee</th>
+                    <th>Start Date</th>
+                    <th>End Date </th>
+                    <th>Avaliable</th>
+                </tr>
             </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.carid</td>
+                    <td>@item.custid</td> 
+                    <td>@item.fee</td>
+                    <td>@item.sdate</td>
+                    <td>@item.edate</td>
+                    <td>@item.available</td>
+                </tr>
+            }
 
-            <tbody style="color: black;">
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.carno</td>
-                        <td>@item.custid</td>
-                        <td>@item.rentalfee</td> 
-                        <td>@item.sdate</td>
-                        <td>@item.edate</td>
-                        @*<td>@item.durum</td>*@ 
-                    </tr>
-                }
-
-            </tbody>
 
 
 
@@ -100,7 +95,7 @@
             load();
 
         });
-        //SAYFA YÜKLENDİĞİNDE İLK BURA ÇÜNKÜ TEXTBOXLAR DISABLED OKEY
+
         function load() {
             $("#custid").attr("disabled", "disabled");
             $("#custname").attr("disabled", "disabled");
@@ -110,7 +105,7 @@
         }
 
         function getCar() {
-            //BURASI DROPDOWNLIST'E ARABALARI SIRALIYOR YANİ BU DEMEK OLUYOR Kİ ÇALIŞIYOR BURASI
+           
             $.ajax({
                 type: 'GET',
                 url: '/rent/Getcar',
@@ -136,7 +131,6 @@
         });
 
         function available() {
-            /* var carid = $("#carid").val(); KAFAYI YİCEM ŞİMDİ */ 
 
             $.ajax({
                 type: 'POST',

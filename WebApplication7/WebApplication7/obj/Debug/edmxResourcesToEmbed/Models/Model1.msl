@@ -34,5 +34,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="returncars">
+      <EntityTypeMapping TypeName="supercarModel.returncar">
+        <MappingFragment StoreEntitySet="returncar">
+          <ScalarProperty Name="fine" ColumnName="fine" />
+          <ScalarProperty Name="elsp" ColumnName="elsp" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="custid" ColumnName="custid" />
+          <ScalarProperty Name="carno" ColumnName="carno" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

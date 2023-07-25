@@ -30,9 +30,21 @@
     <Property Name="sdate" Type="date" />
     <Property Name="edate" Type="date" />
   </EntityType>
+  <EntityType Name="returncar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="carno" Type="varchar" MaxLength="50" />
+    <Property Name="custid" Type="int" />
+    <Property Name="date" Type="date" />
+    <Property Name="elsp" Type="int" />
+    <Property Name="fine" Type="int" />
+  </EntityType>
   <EntityContainer Name="supercarModelStoreContainer">
     <EntitySet Name="carreg" EntityType="Self.carreg" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="rentail" EntityType="Self.rentail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="returncar" EntityType="Self.returncar" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

@@ -80,3 +80,4 @@ C:\Users\srdl_\source\repos\WebApplication7\WebApplication7\obj\Debug\WebApplica
 C:\Users\srdl_\source\repos\WebApplication7\WebApplication7\obj\Debug\WebApplication7.csproj.CopyComplete
 C:\Users\srdl_\source\repos\WebApplication7\WebApplication7\obj\Debug\WebApplication7.dll
 C:\Users\srdl_\source\repos\WebApplication7\WebApplication7\obj\Debug\WebApplication7.pdb
+C:\Users\srdl_\source\repos\WebApplication7\WebApplication7\obj\Debug\WebApplication7.csproj.AssemblyReference.cache

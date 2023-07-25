@@ -1,0 +1,83 @@
+﻿<div class="=row">
+    <div class="col-sm-4">
+        @using (Html.BeginForm("Save", "returncar", FormMethod.Post, new { id = "popupForm" }))
+        {
+            <div>
+                <h1>Car Rentail</h1>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Car no</label>
+                <input type="text" id="carid" name="carid" class="form-control" placeholder="CarID" required>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Customer ID</label>
+                <input type="text" id="custid" name="custid" class="form-control" placeholder="CustID" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Date</label>
+                <input type="text" id="date" name="date" class="form-control" placeholder="CustName" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Days Elapsed</label>
+                <input type="text" id="elsp" name="elsp" class="form-control" placeholder="Rental fee" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Fine</label>
+                <input type="text" id="fine" name="fine" class="form-control" placeholder="Start Date" required>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="save" class="btn btn-success" />
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script> 
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        getCarid();
+
+        function getCarid() {
+
+            
+            $("#carno").keyup(function (e) {   
+                $.ajax({
+                    type: 'POST',
+                    url: '/returncar/Getid?carno' + $("#carno").val,
+                    /*data: { id: $("#carid").val() },*/
+                    dataType: 'JSON',
+                    success: function (data) {
+
+                        console.log.data()
+
+                        
+
+                        $('#custid').val(data[0].Custid);
+                        $('#date').val(new Date(parseInt(data[0].EndDate.substr(6))).toLocaleDateString());
+                        $('#elsp').val(data[0].ElapsedDays);
+
+                        var elap = data[0].ElapsedDays;
+
+                        if (elap>0) {
+
+                            var fine = elap * 100;
+                            $('#fine').val(fine.toString());
+                                
+
+                        }
+                          
+                        else {
+                            $('#fine').val("0");
+                        }
+                        
+                    }
+                });
+            });
+        }
+    </script>
+}
